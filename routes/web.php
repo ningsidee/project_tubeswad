@@ -23,7 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('schedulings', SchedulingController::class)->middleware('auth');
     Route::resource('indikator-kesehatan', IndikatorController::class);
     // Rute untuk Aktivitas Harian menggunakan resource controller
-    Route::resource('aktivitas_harian', AktivitasHarianController::class)
+    Route::resource('aktivitas_harian', AktivitasHarianController::class);
     // Rute untuk Pola Makan menggunakan resource controller
     Route::resource('pola_makan', PolaMakanController::class);
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
