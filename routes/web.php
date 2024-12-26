@@ -1,20 +1,28 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SchedulingController;
 
+// Redirect root to dashboard
 Route::get('/', function () {
+    // return redirect()->route('dashboard');
     return view('welcome');
 });
 
+// Dashboard route
 Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+    $nav = 'Dashboard';
+    return view('dashboard', compact('nav'));
+})->name('dashboard');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Scheduling routes
+Route::resource('schedulings', SchedulingController::class)->middleware('auth');
 
-require __DIR__.'/auth.php';
+
+Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// Add additional routes below as needed
+
+// Authentication routes (if not using Breeze, Jetstream, etc.)
+require __DIR__ . '/auth.php';

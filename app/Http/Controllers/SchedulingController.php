@@ -34,6 +34,7 @@ class SchedulingController extends Controller
         $request->validate([
             'time' => 'required|string',
             'hari' => 'required|string',
+            'tanggal' => 'required|date',
             'aktivitas' => 'required|string',
             'repeat' => 'required|boolean',
         ]);
@@ -42,6 +43,7 @@ class SchedulingController extends Controller
             'user_id' => Auth::id(),
             'time' => $request->time,
             'hari' => $request->hari,
+            'tanggal' => $request->tanggal,
             'aktivitas' => $request->aktivitas,
             'repeat' => $request->repeat,
         ]);
@@ -52,18 +54,19 @@ class SchedulingController extends Controller
     // Form untuk mengedit jadwal
     public function edit(Scheduling $scheduling)
     {
-        $this->authorize('update', $scheduling); // Opsional jika menggunakan policy
+       // Opsional jika menggunakan policy
         return view('schedulings.edit', compact('scheduling'));
     }
 
     // Memperbarui jadwal
     public function update(Request $request, Scheduling $scheduling)
     {
-        $this->authorize('update', $scheduling); // Opsional jika menggunakan policy
+        // Opsional jika menggunakan policy
 
         $request->validate([
             'time' => 'required|string',
             'hari' => 'required|string',
+            'tanggal'=> 'required|date',
             'aktivitas' => 'required|string',
             'repeat' => 'required|boolean',
         ]);
@@ -71,6 +74,7 @@ class SchedulingController extends Controller
         $scheduling->update([
             'time' => $request->time,
             'hari' => $request->hari,
+            'tanggal'=> $request->tanggal,
             'aktivitas' => $request->aktivitas,
             'repeat' => $request->repeat,
         ]);
@@ -81,7 +85,7 @@ class SchedulingController extends Controller
     // Menghapus jadwal
     public function destroy(Scheduling $scheduling)
     {
-        $this->authorize('delete', $scheduling); // Opsional jika menggunakan policy
+        // Opsional jika menggunakan policy
         $scheduling->delete();
 
         return redirect()->route('schedulings.index')->with('success', 'Jadwal berhasil dihapus!');

@@ -9,10 +9,13 @@ class Scheduling extends Model
 {
     use HasFactory;
 
+    protected $table = 'scheduling';
+
     protected $fillable = [
         'user_id',
         'time',
         'hari',
+        'tanggal',
         'aktivitas',
         'repeat',
     ];
