@@ -33,5 +33,9 @@ Route::middleware('auth')->group(function () {
 
 
 
+
+
+
 // Route untuk otentikasi
+
 require __DIR__.'/auth.php';
