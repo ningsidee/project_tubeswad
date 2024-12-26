@@ -13,12 +13,15 @@ return new class extends Migration
     {
         Schema::create('aktivitas_harian', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->integer('jumlah_langkah')->default(0);
+            $table->date('tanggal')->nullable();
+            $table->time('waktu_tidur')->nullable();
+            $table->time('waktu_bangun')->nullable();
             $table->timestamps();
-            $table->string('user_id');
-            $table->integer('Jumlah Langkah');
-            $table->datetime('Waktu Tidur');
-            $table->datetime('Waktu Bangun');
 
+            // Tambahkan foreign key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
