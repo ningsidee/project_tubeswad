@@ -16,6 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id'); // Foreign key to users table
             $table->integer('height')->nullable(); // Tinggi badan (cm)
             $table->float('weight')->nullable(); // Berat badan (kg)
+            $table->time('sleep_time')->nullable(); // Waktu tidur
+            $table->time('wake_time')->nullable(); // Waktu bangun
             $table->timestamps(); // created_at and updated_at
         });
     }
