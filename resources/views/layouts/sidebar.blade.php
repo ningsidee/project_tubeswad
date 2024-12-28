@@ -62,12 +62,12 @@
         </li>
 
         <!-- Artikel -->
-        <li class="nav-item mb-3 {{ Route::is('schedulings.index') ? 'fw-bold' : '' }}">
-            <a href="{{ route('schedulings.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
+        <li class="nav-item mb-3 {{ Route::is('artikel.index') ? 'fw-bold' : '' }}">
+            <a href="{{ route('artikel.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
                 <span class="material-symbols-rounded" style="color: #4B0082;">newsstand</span>
                 <span class="ms-3 d-none d-sm-inline">Article</span>
-                @if (Route::is('schedulings.index'))
-                    
+                @if (Route::is('artikel.index'))
+                <span class="ms-auto text-warning material-symbols-rounded">circle</span>    
                 @endif
             </a>
         </li>

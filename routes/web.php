@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AktivitasHarianController;
 use App\Http\Controllers\PolaMakanController;
 use App\Http\Controllers\SchedulingController;
+use App\Http\Controllers\ArtikelController;
 
 
 // Route halaman utama
@@ -23,6 +24,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resource('schedulings', SchedulingController::class)->middleware('auth');
     Route::resource('indikator-kesehatan', IndikatorController::class);
+    Route::resource('artikel', ArtikelController::class);
     // Rute untuk Aktivitas Harian menggunakan resource controller
     Route::resource('aktivitas_harian', AktivitasHarianController::class);
     // Rute untuk Pola Makan menggunakan resource controller
