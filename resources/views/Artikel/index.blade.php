@@ -1,4 +1,4 @@
-@extends('artikels.layout')
+@extends('artikel.layout')
 
 @section('content')
     <div class="container mt-5">

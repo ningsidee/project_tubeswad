@@ -15,7 +15,7 @@ class ArtikelController extends Controller
     {
     // Menampilkan daftar artikel
         $artikels = Artikel::all();
-        return view('artikels.index', compact('artikels'));  //
+        return view('artikel.index', compact('artikels'));  //
     }
 
     /**
@@ -42,7 +42,7 @@ class ArtikelController extends Controller
     Artikel::create($validated);
 
     // Redirect ke halaman daftar artikel
-    return redirect()->route('artikels.index')->with('success', 'Artikel berhasil ditambahkan!');
+    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil ditambahkan!');
     }
 
     /**
@@ -78,7 +78,7 @@ class ArtikelController extends Controller
     $artikel->update($validated);
 
     // Redirect ke halaman daftar artikel
-    return redirect()->route('artikels.index')->with('success', 'Artikel berhasil diperbarui!');
+    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diperbarui!');
     }
 
     /**
@@ -90,6 +90,6 @@ class ArtikelController extends Controller
     $artikel->delete();
 
     // Redirect ke halaman daftar artikel
-    return redirect()->route('artikels.index')->with('success', 'Artikel berhasil dihapus!');
+    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil dihapus!');
     }
 }
