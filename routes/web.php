@@ -1,43 +1,50 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\IndikatorController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AktivitasHarianController;
+use App\Http\Controllers\PolaMakanController;
+use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\SchedulingController;
 
 
-// Redirect root to dashboard
 Route::get('/', function () {
     // return redirect()->route('dashboard');
     return view('welcome');
 });
 
-// Dashboard route
+// Route dashboard
 Route::get('/dashboard', function () {
     $nav = 'Dashboard';
     return view('dashboard', compact('nav'));
 })->name('dashboard');
 
 
-// Scheduling routes
-Route::resource('schedulings', SchedulingController::class)->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::resource('schedulings', SchedulingController::class)->middleware('auth');
+
+    Route::resource('communities', CommunityController::class)->middleware('auth');
+    Route::post('communities/{community}/join', [CommunityController::class, 'join'])->name('communities.join');
+    Route::delete('communities/{community}/leave', [CommunityController::class, 'leave'])->name('communities.leave');
+
+    Route::resource('communities.threads', ThreadController::class);
+    Route::resource('indikator-kesehatan', IndikatorController::class);
+    // Rute untuk Aktivitas Harian menggunakan resource controller
+    Route::resource('aktivitas_harian', AktivitasHarianController::class);
+    // Rute untuk Pola Makan menggunakan resource controller
+    Route::resource('pola_makan', PolaMakanController::class);
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
 
 
 
 
-// Community routes
-Route::resource('communities', CommunityController::class)->middleware('auth');
-Route::post('communities/{community}/join', [CommunityController::class, 'join'])->name('communities.join');
-Route::delete('communities/{community}/leave', [CommunityController::class, 'leave'])->name('communities.leave');
-
-Route::resource('communities.threads', ThreadController::class);
 
 
-Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// Add additional routes below as needed
+// Route untuk otentikasi
 
-// Authentication routes (if not using Breeze, Jetstream, etc.)
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
