@@ -5,10 +5,11 @@ use App\Http\Controllers\IndikatorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AktivitasHarianController;
 use App\Http\Controllers\PolaMakanController;
+use App\Http\Controllers\ThreadController;
+use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\SchedulingController;
 
 
-// Route halaman utama
 Route::get('/', function () {
     // return redirect()->route('dashboard');
     return view('welcome');
@@ -20,8 +21,15 @@ Route::get('/dashboard', function () {
     return view('dashboard', compact('nav'));
 })->name('dashboard');
 
+
 Route::middleware('auth')->group(function () {
     Route::resource('schedulings', SchedulingController::class)->middleware('auth');
+
+    Route::resource('communities', CommunityController::class)->middleware('auth');
+    Route::post('communities/{community}/join', [CommunityController::class, 'join'])->name('communities.join');
+    Route::delete('communities/{community}/leave', [CommunityController::class, 'leave'])->name('communities.leave');
+
+    Route::resource('communities.threads', ThreadController::class);
     Route::resource('indikator-kesehatan', IndikatorController::class);
     // Rute untuk Aktivitas Harian menggunakan resource controller
     Route::resource('aktivitas_harian', AktivitasHarianController::class);
