@@ -15,13 +15,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route dashboard
-Route::get('/dashboard', function () {
-    $nav = 'Dashboard';
-    return view('dashboard', compact('nav'));
-})->name('dashboard');
-
-
 Route::middleware('auth')->group(function () {
     Route::resource('schedulings', SchedulingController::class)->middleware('auth');
 
