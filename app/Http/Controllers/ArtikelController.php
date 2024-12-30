@@ -3,93 +3,93 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artikel;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class ArtikelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function dashboard()
+    {
+        $artikels = Artikel::latest()->take(6)->get(); // Ambil 6 artikel terbaru
+        return view('dashboard', compact('artikels'));
+    }
+
     public function index()
     {
-    // Menampilkan daftar artikel
-        $artikels = Artikel::all();
-        return view('artikel.index', compact('artikels'));  //
+        $articles = Artikel::all();
+        return view('articles.index', compact('articles'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        // Menampilkan form untuk membuat artikel baru
-        return view('artikels.create');
+        return view('articles.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-    // Validasi data
-        $validated = $request->validate([
-            'judul' => 'required|string|max:255',
-            'konten' => 'required|string',
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'link' => 'required|url',
+            'tanggal' => 'required|date',
         ]);
 
-    // Menyimpan artikel ke database
-    Artikel::create($validated);
+        $imagePath = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
 
-    // Redirect ke halaman daftar artikel
-    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil ditambahkan!');
+        Artikel::create([
+            'user_id' => Auth::id(),
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $imagePath,
+            'link' => $request->link,
+            'tanggal' => $request->tanggal,
+        ]);
+
+        return redirect()->route('artikel.index')->with('success', 'Article created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Artikel $artikel)
+    public function edit($id)
     {
-        // Menampilkan detail artikel
-        return view('artikels.show', compact('artikel'));
+        $article = Artikel::findOrFail($id);
+        return view('articles.edit', compact('article'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Artikel $artikel)
+    public function update(Request $request, $id)
     {
-         // Menampilkan form untuk mengedit artikel
-         return view('artikels.edit', compact('artikel'));
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'link' => 'required|url',
+            'tanggal' => 'required|date',
+        ]);
+
+        $article = Artikel::findOrFail($id);
+        $imagePath = $article->image;
+        if ($request->file('image')) {
+            $imagePath = $request->file('image')->store('images', 'public');
+        }
+        // Perbarui data artikel
+        $article->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $imagePath,
+            'link' => $request->link,
+            'tanggal' => $request->tanggal,
+        ]);
+        if ($article->wasChanged()) {
+            return redirect()->route('artikel.index')->with('success', 'Article updated successfully.');
+        } else {
+            return redirect()->route('artikel.index')->with('warning', 'No changes detected.');
+        }
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Artikel $artikel)
+    public function destroy($id)
     {
-    // Validasi data
-    $validated = $request->validate([
-        'judul' => 'required|string|max:255',
-        'konten' => 'required|string',
-    ]);
-
-    // Memperbarui artikel
-    $artikel->update($validated);
-
-    // Redirect ke halaman daftar artikel
-    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil diperbarui!');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Artikel $artikel)
-    {
-    // Menghapus artikel
-    $artikel->delete();
-
-    // Redirect ke halaman daftar artikel
-    return redirect()->route('artikel.index')->with('success', 'Artikel berhasil dihapus!');
+        $article = Artikel::findOrFail($id);
+        $article->delete();
+        return redirect()->route('artikel.index')->with('success', 'Article deleted successfully.');
     }
 }
