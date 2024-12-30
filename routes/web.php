@@ -8,7 +8,7 @@ use App\Http\Controllers\PolaMakanController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommunityController;
 use App\Http\Controllers\SchedulingController;
-
+use App\Http\Controllers\ArtikelController;
 
 Route::get('/', function () {
     // return redirect()->route('dashboard');
@@ -31,6 +31,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('communities.threads', ThreadController::class);
     Route::resource('indikator-kesehatan', IndikatorController::class);
+    Route::middleware(['role:admin'])->group(function () {
+        Route::resource('artikel', ArtikelController::class);
+    });
+    Route::get('/dashboard', [ArtikelController::class, 'dashboard'])->name('dashboard');
     // Rute untuk Aktivitas Harian menggunakan resource controller
     Route::resource('aktivitas_harian', AktivitasHarianController::class);
     // Rute untuk Pola Makan menggunakan resource controller
@@ -40,11 +44,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
-
-
-
-
 // Route untuk otentikasi
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
