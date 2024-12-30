@@ -1,4 +1,5 @@
 <nav class="d-flex flex-column align-items-center align-items-sm-start position-fixed bg-body-tertiary start-0 top-0 mb-5 rounded p-3 text-white shadow"
+<nav class="d-flex flex-column align-items-center align-items-sm-start position-fixed bg-body-tertiary start-0 top-0 mb-5 rounded p-3 text-white shadow"
     style="width: 300px; height: 100vh; 
            background: linear-gradient(to bottom, #F3E5F5, #D8BFD8, #5c275e); 
            background-size: cover;
