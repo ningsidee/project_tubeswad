@@ -2,120 +2,113 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Community;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 
 class CommunityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Display a listing of the communities
     public function index()
     {
-        //
-        $communities = Community::all();
-        return response()->json($communities);
+        $communities = Community::with('participants')->get();
+        return view('communities.index', compact('communities'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // Show the form for creating a new community
     public function create()
     {
-        //
-        $users = User::all(); // Mengambil semua data pengguna
-        $communities = Community::all(); // Mengambil semua komunitas
-
-        return response()->json([
-            'users' => $users,
-            'communities' => $communities
-        ]);
+        return view('communities.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store a newly created community in storage
     public function store(Request $request)
     {
-        //
-        {
-            // Validasi input data
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'time' => 'required|date',
-                'description' => 'required|string',
-            ]);
-    
-            // Membuat komunitas baru
-            $community = Community::create([
-                'name' => $validated['name'],
-                'time' => $validated['time'],
-                'description' => $validated['description'],
-            ]);
-    
-            return response()->json($community, 201); // Mengembalikan komunitas yang baru dibuat
-        }
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-        // Menampilkan komunitas berdasarkan ID
-        $community = Community::findOrFail($id);
-        return response()->json($community);
-        
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-        $community = Community::findOrFail($id);
-        return response()->json($community);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'time' => 'required|date',
-            'description' => 'required|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Mengambil komunitas yang akan diupdate
-        $community = Community::findOrFail($id);
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('community_images', 'public');
+            $validated['image'] = $imagePath;
+        }
 
-        // Melakukan pembaruan data
-        $community->update([
-            'name' => $validated['name'],
-            'time' => $validated['time'],
-            'description' => $validated['description'],
+        // Tambahkan 'created_by' ke data validasi
+        $validated['created_by'] = auth()->id();
+
+        // Buat komunitas baru
+        $community = Community::create($validated);
+
+        // Tambahkan pembuat komunitas sebagai participant dengan role admin
+        $community->participants()->create([
+            'user_id' => auth()->id(),
+            'role' => 'admin',
         ]);
 
-        return response()->json($community); // Mengembalikan komunitas yang sudah diperbarui
-    
+        return redirect()->route('communities.index')->with('success', 'Community created successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Display the specified community
+    public function show(Community $community)
     {
-        //
-          // Mengambil komunitas berdasarkan ID
-        $community = Community::findOrFail($id);
+        $community->load('participants.user', 'threads');
+        return view('communities.show', compact('community'));
+    }
 
-          // Menghapus komunitas
+    // Show the form for editing the specified community
+    public function edit(Community $community)
+    {
+        return view('communities.edit', compact('community'));
+    }
+
+    // Update the specified community in storage
+    public function update(Request $request, Community $community)
+    {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
+            if ($community->image) {
+                \Storage::disk('public')->delete($community->image);
+            }
+            $imagePath = $request->file('image')->store('community_images', 'public');
+            $validated['image'] = $imagePath;
+        }
+
+        $community->update($validated);
+
+        return redirect()->route('communities.index')->with('success', 'Community updated successfully.');
+    }
+
+    // Remove the specified community from storage
+    public function destroy(Community $community)
+    {
         $community->delete();
 
-        return response()->json(['message' => 'Community deleted successfully']);
+        return redirect()->route('communities.index')->with('success', 'Community deleted successfully.');
+    }
+
+    public function join(Community $community)
+    {
+        $community->participants()->create([
+            'user_id' => auth()->id(),
+            'role' => 'member',
+        ]);
+
+        return redirect()->route('communities.index')->with('success', 'You have joined the community.');
+    }
+
+    public function leave(Community $community)
+    {
+        $community->participants()->where('user_id', auth()->id())->delete();
+
+        return redirect()->route('communities.index')->with('success', 'You have left the community.');
     }
 }
