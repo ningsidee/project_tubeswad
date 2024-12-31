@@ -1,83 +1,132 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h1>Daftar Aktivitas Harian dan Pola Makan</h1>
+<div class="container py-4">
+    <!-- Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4">Aktivitas Harian dan Pola Makan</h1>
+        <p class="lead text-muted">Kelola Aktivitas Harian dan Pola Makan Anda dengan Mudah dan Terorganisir.</p>
+    </div>
 
-    <!-- Tombol Create untuk Aktivitas Harian -->
-    <a href="{{ route('aktivitas_harian.create') }}" class="btn btn-primary mb-3">Tambah Aktivitas Harian</a>
+    <!-- Tombol Create -->
+    <div class=" no-print d-flex justify-content-between mb-4">
+        <a href="{{ route('aktivitas_harian.create') }}" class="no-print btn btn-lg text-white" 
+           style="background-color: #4B0082; border-color: #4B0082;">
+           <i class="fas fa-walking me-2"></i>Tambah Aktivitas Harian 
+           <a class="no-print btn mb-3" onclick="window.print()" style="background-color: #4B0082 !important; color: white !important;"><span class="material-symbols-rounded" style="font-size: 18px;" >print</span>Print</a>
+        </a>
+    </div>
 
     <!-- Daftar Aktivitas Harian -->
-    <h3>Aktivitas Harian</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Tanggal</th>
-                <th>Jumlah Langkah</th>
-                <th>Waktu Tidur</th>
-                <th>Waktu Bangun</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($aktivitasHarian as $aktivitas)
-                <tr>
-                    <td>{{ $aktivitas->tanggal }}</td>
-                    <td>{{ $aktivitas->jumlah_langkah }}</td>
-                    <td>{{ $aktivitas->waktu_tidur }}</td>
-                    <td>{{ $aktivitas->waktu_bangun }}</td>
-                    <td>
-                        <!-- Edit Aktivitas Harian -->
-                        <a href="{{ route('aktivitas_harian.edit', $aktivitas->id) }}" class="btn btn-warning btn-sm">Edit</a>
+    <div class="card shadow-sm mb-5">
+        <div class="card-header bg-indigo text-white"  style="background-color: #4B0082; border-color: #4B0082; color: #fff;">
+            <h3 class="card-title mb-0"  style="background-color: #4B0082; border-color: #4B0082; color: #fff;">Daftar Aktivitas Harian</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Jumlah Langkah</th>
+                        <th>Waktu Tidur</th>
+                        <th>Waktu Bangun</th>
+                        <th class=" no-print text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($aktivitasHarian as $aktivitas)
+                        <tr>
+                            <td>{{ $aktivitas->tanggal }}</td>
+                            <td>{{ $aktivitas->jumlah_langkah }}</td>
+                            <td>{{ $aktivitas->waktu_tidur }}</td>
+                            <td>{{ $aktivitas->waktu_bangun }}</td>
+                            <td class="no-print text-center">
+                                <a href="{{ route('aktivitas_harian.edit', $aktivitas->id) }}" 
+                                   class="btn btn-sm btn-warning me-1">
+                                   <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('aktivitas_harian.destroy', $aktivitas->id) }}" 
+                                      method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus aktivitas ini?')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Belum ada aktivitas harian yang ditambahkan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-                        <!-- Delete Aktivitas Harian -->
-                        <form action="{{ route('aktivitas_harian.destroy', $aktivitas->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus aktivitas harian ini?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <!-- Tombol Create untuk Pola Makan -->
-    <a href="{{ route('pola_makan.create') }}" class="btn btn-primary mb-3">Tambah Pola Makan</a>
+    <div class="no-print d-flex justify-content-between mb-4">
+        <a href="{{ route('pola_makan.create') }}" class="no-print btn btn-lg text-white" 
+            style="background-color: #4B0082; border-color: #4B0082;">
+            <i class="fas fa-utensils me-2"></i>Tambah Pola Makan
+        </a>
+    </div>
 
     <!-- Daftar Pola Makan -->
-    <h3>Pola Makan</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Tanggal</th>
-                <th>Nama Makanan</th>
-                <th>Total</th>
-                <th>Kalori</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($polaMakan as $pola)
-                <tr>
-                    <td>{{ $pola->tanggal }}</td>
-                    <td>{{ $pola->nama_makanan }}</td>
-                    <td>{{ $pola->total }}</td>
-                    <td>{{ $pola->calories }}</td>
-                    <td>
-                        <!-- Edit Pola Makan -->
-                        <a href="{{ route('pola_makan.edit', $pola->id) }}" class="btn btn-warning btn-sm">Edit</a>
-
-                        <!-- Delete Pola Makan -->
-                        <form action="{{ route('pola_makan.destroy', $pola->id) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus pola makan ini?')">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+    <div class="card shadow-sm">
+        <div class="card-header bg-indigo text-white"  style="background-color: #4B0082; border-color: #4B0082; color: #fff;">
+            <h3 class="card-title mb-0"  style="background-color: #4B0082; border-color: #4B0082; color: #fff;">Daftar Pola Makan</h3>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Tanggal</th>
+                        <th>Nama Makanan</th>
+                        <th>Total</th>
+                        <th>Kalori</th>
+                        <th class=" no-print text-center">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @forelse ($polaMakan as $pola)
+                        <tr>
+                            <td>{{ $pola->tanggal }}</td>
+                            <td>{{ $pola->nama_makanan }}</td>
+                            <td>{{ $pola->total }}</td>
+                            <td>{{ $pola->calories }}</td>
+                            <td class="no-print text-center">
+                                <a href="{{ route('pola_makan.edit', $pola->id) }}" 
+                                   class="btn btn-sm btn-warning me-1">
+                                   <i class="fas fa-edit"></i> Edit
+                                </a>
+                                <form action="{{ route('pola_makan.destroy', $pola->id) }}" 
+                                      method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Apakah Anda yakin ingin menghapus pola makan ini?')">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">Belum ada pola makan yang ditambahkan.</td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
+<style>
+    @media print {
+        .no-print {
+            display: none;
+        }
+    }
+</style>
 @endsection

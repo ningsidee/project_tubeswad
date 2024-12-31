@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\IndikatorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SchedulingController;
 use App\Http\Controllers\AktivitasHarianController;
 use App\Http\Controllers\PolaMakanController;
 use App\Http\Controllers\ThreadController;
