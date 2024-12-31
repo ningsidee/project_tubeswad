@@ -8,7 +8,6 @@ use App\Http\Controllers\AktivitasHarianController;
 use App\Http\Controllers\PolaMakanController;
 use App\Http\Controllers\ThreadController;
 use App\Http\Controllers\CommunityController;
-use App\Http\Controllers\SchedulingController;
 use App\Http\Controllers\ArtikelController;
 
 Route::get('/', function () {
