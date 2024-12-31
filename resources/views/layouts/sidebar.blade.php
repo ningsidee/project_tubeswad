@@ -51,12 +51,12 @@
         </li>
 
         <!-- Aktivitas Harian -->
-        <li class="nav-item mb-3 {{ Route::is('schedulings.index') ? 'fw-bold' : '' }}">
-            <a href="{{ route('schedulings.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
+        <li class="nav-item mb-3 {{ Route::is('aktivitas_harian.index') ? 'fw-bold' : '' }}">
+            <a href="{{ route('aktivitas_harian.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
                 <span class="material-symbols-rounded" style="color: #4B0082;">footprint</span>
                 <span class="ms-3 d-none d-sm-inline">Daily Activity</span>
-                @if (Route::is('schedulings.index'))
-                    
+                @if (Route::is('aktivitas_harian.index'))
+                <span class="ms-auto text-warning material-symbols-rounded">circle</span>
                 @endif
             </a>
         </li>
