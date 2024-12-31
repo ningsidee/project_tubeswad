@@ -3,9 +3,9 @@
 @section('content')
     {{-- Back Button --}}
     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
-        <a href="{{ route('indikator-kesehatan.index') }}" class="btn btn-outline-primary d-flex gap-2">
+        <a href="{{ route('indikator-kesehatan.index') }}" class="btn btn-outline-primary d-flex gap-2" style="background-color: #4B0082; color: white;">
             <div class="">
-            <span class="material-symbols-rounded" style="background-color: #4B0082; color: white;" >arrow_back</span>
+            <span class="material-symbols-rounded" >arrow_back</span>
             </div> Daftar Indikator Kesehatan
         </a>
     </div>
@@ -59,7 +59,7 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary" style="background-color: #4B0082; color: white;">Simpan</button>
             </form>
         </div>
     </div>

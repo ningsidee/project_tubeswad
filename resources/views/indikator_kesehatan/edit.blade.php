@@ -3,7 +3,7 @@
 @section('content')
     {{-- Back Button --}}
     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
-    <a href="{{ route('indikator-kesehatan.index') }}" class="btn btn-outline-primary d-flex gap-2">
+    <a href="{{ route('indikator-kesehatan.index') }}" class="btn btn-outline-primary d-flex gap-2" style="background-color: #4B0082; color: white;">
         <div class="">
         <span class="material-symbols-rounded">arrow_back</span>
         </div>
