@@ -40,12 +40,12 @@
         </li>
 
         <!-- indikator kesehatan -->
-        <li class="nav-item mb-3 {{ Route::is('schedulings.index') ? 'fw-bold' : '' }}">
-            <a href="{{ route('schedulings.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
+        <li class="nav-item mb-3 {{ Route::is('indikator-kesehatan.index') ? 'fw-bold' : '' }}">
+            <a href="{{ route('indikator-kesehatan.index') }}" class="nav-link d-flex align-items-center" style="color: #4B0082;">
                 <span class="material-symbols-rounded" style="color: #4B0082;">medical_information</span>
                 <span class="ms-3 d-none d-sm-inline">Health Indicator</span>
-                @if (Route::is('schedulings.index'))
-                    
+                @if (Route::is('indikator-kesehatan.index'))
+                <span class="ms-auto text-warning material-symbols-rounded">circle</span>
                 @endif
             </a>
         </li>

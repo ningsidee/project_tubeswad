@@ -19,7 +19,7 @@
 <body class="bg-light">
     <div class="d-flex">
         <!-- Sidebar -->
-        <div class="absolute z-1 bg-light text-white p-3 vh-100" style="width: 300px; position: sticky; top: 0;">
+        <div class="no-print absolute z-1 bg-light text-white p-3 vh-100" style="width: 300px; position: sticky; top: 0;">
             @include('layouts.sidebar')
         </div>
         <!-- Navbar -->
@@ -27,7 +27,7 @@
                  @include('layouts.navbar')
              </header>
             <!-- Main Content -->
-            <div class="mt-20 p-4">
+            <div class="p-4" style="margin-top:108px;">
                 @yield('content')
             </div>
         </div>
