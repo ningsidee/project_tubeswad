@@ -67,7 +67,7 @@
             <!-- Aktivitas Harian -->
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow" style="border: none;">
-                    <a href="{{ route('schedulings.index') }}">
+                    <a href="{{ route('aktivitas_harian.index') }}">
                     <div class="card-body text-center">
                         <span class="material-symbols-rounded" style="color: #4B0082;font-size: 36px">footprint</span>
                         <h5 class="card-title fw-bold" style="color: #4B0082;">Daily Activity</h5>
@@ -95,7 +95,7 @@
             <!-- Communication -->
             <div class="col-md-4 mb-4">
                 <div class="card h-100 shadow" style="border: none;">
-                    <a href="{{ route('schedulings.index') }}">
+                    <a href="{{ route('communities.index') }}">
                     <div class="card-body text-center">
                         <span class="material-symbols-rounded" style="color: #4B0082;font-size: 36px">diversity_1</span>
                         <h5 class="card-title fw-bold" style="color: #4B0082;">Community</h5>
