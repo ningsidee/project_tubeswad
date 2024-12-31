@@ -8,6 +8,7 @@
 </style>
 <div class="container">
     <h1>Buat Rencana Baru</h1>
+    
     <form action="{{ route('schedulings.store') }}" method="POST">
         @csrf
         <div class="mb-3">

@@ -4,7 +4,7 @@
 <div class="container">
     <h1>Daftar Rencana Pola Hidup Sehat</h1>
     <a href="{{ route('schedulings.create') }}" class="btn mb-3" style="background-color: #4B0082; color: white;">Buat Rencana Baru</a>
-    
+    <a class="no-print btn mb-3" onclick="window.print()" style="background-color: #4B0082 !important; color: white !important;"><span class="material-symbols-rounded" style="font-size: 18px;" >print</span>Print</a>
     @if(session('success'))
         <div class="alert alert-success">
             {{ session('success') }}
@@ -46,4 +46,5 @@
         </table>
     @endif
 </div>
+<style> @media print { .no-print { display: none; } } </style>
 @endsection
