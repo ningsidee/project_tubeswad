@@ -13,13 +13,15 @@ return new class extends Migration
     {
         Schema::create('pola_makan', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->date('tanggal')->nullable();
+            $table->string('nama_makanan');
+            $table->integer('total')->default(0);
+            $table->integer('calories')->default(0);
             $table->timestamps();
-            $table->unsignedBigInteger('activity_id');
-            $table->string('Nama Makanan');
-            $table->integer('Total');
-            $table->integer('Calories'); 
 
-            $table->foreign('activity_id')->references('id')->on('aktivitas_harian')->onDelete('cascade');
+            // Tambahkan foreign key
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

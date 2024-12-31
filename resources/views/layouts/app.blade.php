@@ -12,13 +12,14 @@
     <!-- Material Icons -->
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" />
-    
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="bg-light">
     <div class="d-flex">
         <!-- Sidebar -->
+
         <div class="no-print absolute z-1 bg-light text-white p-3 vh-100" style="width: 300px; position: sticky; top: 0;">
             @include('layouts.sidebar')
         </div>
@@ -27,14 +28,15 @@
                  @include('layouts.navbar')
              </header>
             <!-- Main Content -->
-            <div class="p-4" style="margin-top:108px;">
+            <div class="w-100 ml-16 mt-24 p-4">
                 @yield('content')
             </div>
         </div>
+    </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>
+
