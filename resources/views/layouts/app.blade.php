@@ -19,16 +19,18 @@
 <body class="bg-light">
     <div class="d-flex">
         <!-- Sidebar -->
-        <div class="z-1 bg-light vh-100 absolute p-3 text-white" style="width: 300px; position: sticky; top: 0;">
+
+        <div class="no-print absolute z-1 bg-light text-white p-3 vh-100" style="width: 300px; position: sticky; top: 0;">
             @include('layouts.sidebar')
         </div>
         <!-- Navbar -->
-        <header class="vw-100 absolute">
-            @include('layouts.navbar')
-        </header>
-        <!-- Main Content -->
-        <div class="w-100 ml-16 mt-24 p-4">
-            @yield('content')
+             <header class="absolute vw-100">
+                 @include('layouts.navbar')
+             </header>
+            <!-- Main Content -->
+            <div class="w-100 ml-16 mt-24 p-4">
+                @yield('content')
+            </div>
         </div>
     </div>
     </div>

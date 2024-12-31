@@ -5,7 +5,7 @@
     <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-3">
         <a href="{{ route('indikator-kesehatan.index') }}" class="btn btn-outline-primary d-flex gap-2">
             <div class="">
-            <span class="material-symbols-outlined">arrow_back</span>
+            <span class="material-symbols-rounded" style="background-color: #4B0082; color: white;" >arrow_back</span>
             </div> Daftar Indikator Kesehatan
         </a>
     </div>

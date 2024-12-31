@@ -1,9 +1,9 @@
 <nav class="d-flex flex-column align-items-center align-items-sm-start position-fixed bg-body-tertiary start-0 top-0 mb-5 rounded p-3 text-white shadow"
-    style="width: 300px; height: 100vh; 
-           background: linear-gradient(to bottom, #F3E5F5, #D8BFD8, #5c275e); 
-           background-size: cover;
-           border-radius: 0 50px 0 0;
-           padding: 20px; margin: 0;">
+    style="width: 300px; height: 100vh;
+        background: linear-gradient(to bottom, #F3E5F5, #D8BFD8, #5c275e);
+        background-size: cover;
+        border-radius: 0 50px 0 0;
+        padding: 20px; margin: 0;">
 
     <!-- Header -->
     <a href="/" class="d-flex align-items-center text-decoration-none mb-4 text-white"
@@ -71,6 +71,9 @@
                     style="color: #4B0082;">
                     <span class="material-symbols-rounded" style="color: #4B0082;">medical_information</span>
                     <span class="d-none d-sm-inline ms-3">Health Indicator</span>
+                    @if (Route::is('indikator-kesehatan.index'))
+                        <span class="text-warning material-symbols-rounded ms-auto">circle</span>
+                    @endif
                 </a>
             </li>
 
@@ -80,6 +83,9 @@
                     style="color: #4B0082;">
                     <span class="material-symbols-rounded" style="color: #4B0082;">footprint</span>
                     <span class="d-none d-sm-inline ms-3">Daily Activity</span>
+                    @if (Route::is('aktivitas_harian.index'))
+                        <span class="text-warning material-symbols-rounded ms-auto">circle</span>
+                    @endif
                 </a>
             </li>
 
@@ -89,6 +95,9 @@
                     style="color: #4B0082;">
                     <span class="material-symbols-rounded" style="color: #4B0082;">diversity_1</span>
                     <span class="d-none d-sm-inline ms-3">Community</span>
+                    @if (Route::is('communities.index'))
+                        <span class="text-warning material-symbols-rounded ms-auto">circle</span>
+                    @endif
                 </a>
             </li>
         </ul>
