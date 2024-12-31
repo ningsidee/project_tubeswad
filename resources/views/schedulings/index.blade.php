@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <h1>Daftar Rencana Pola Hidup Sehat</h1>
-    <a href="{{ route('schedulings.create') }}" class="btn btn-primary mb-3">Buat Rencana Baru</a>
+    <a href="{{ route('schedulings.create') }}" class="btn mb-3" style="background-color: #4B0082; color: white;">Buat Rencana Baru</a>
     
     @if(session('success'))
         <div class="alert alert-success">

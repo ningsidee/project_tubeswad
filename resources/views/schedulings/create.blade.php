@@ -38,7 +38,9 @@
                 <option value="0">Tidak</option>
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Simpan</button>
+        <button type="submit" class="btn" style="background-color: #4B0082 !important; color: white !important;">Simpan</button>
+
+
     </form>
 </div>
 

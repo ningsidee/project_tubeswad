@@ -5,8 +5,10 @@
     <h1> Indikator Kesehatan</h1>
 
     {{-- Button untuk menambah data indikator kesehatan --}}
-    <a href="{{ route('indikator-kesehatan.create') }}" class="no-print btn btn-primary mb-3">Tambah Indikator Baru</a>
-    <a href="{{ route('indikator-kesehatan.create') }}" class="no-print btn btn-primary mb-3" onclick="window.print()">Print</a>
+    <a href="{{ route('indikator-kesehatan.create') }}" class="no-print btn mb-3" style="background-color: #4B0082; color: white;"><span class="material-symbols-rounded" style="font-size: 18px;">add</span>Tambah Indikator Baru</a>
+    <a class="no-print btn mb-3" onclick="window.print()" style="background-color: #4B0082 !important; color: white !important;"><span class="material-symbols-rounded" style="font-size: 18px;" >print</span>Print</a>
+
+
     {{-- Menampilkan pesan sukses jika ada --}}
     @if(session('success'))
         <div class="alert alert-success">{{ session('success') }}</div>

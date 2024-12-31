@@ -15,6 +15,7 @@ class AktivitasHarian extends Model
         'waktu_tidur',
         'waktu_bangun',
     ];
+    
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
